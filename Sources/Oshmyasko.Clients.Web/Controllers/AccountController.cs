@@ -16,8 +16,8 @@ namespace Oshmyasko.Clients.Web.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager, 
-            SignInManager<ApplicationUser> signInManager, 
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
@@ -41,7 +41,7 @@ namespace Oshmyasko.Clients.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
@@ -49,7 +49,14 @@ namespace Oshmyasko.Clients.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToLocal(returnUrl);
+            var result = await signInManager.PasswordSignInAsync(model.Login, model.Password, true, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+
+            ModelState.AddModelError(string.Empty, "Неверный логин или пароль.");
+            return View(model);
         }
 
         [HttpPost]
@@ -80,6 +87,14 @@ namespace Oshmyasko.Clients.Web.Controllers
             AddErrors(result);
 
             return RedirectToLocal(returnUrl);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login");
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
