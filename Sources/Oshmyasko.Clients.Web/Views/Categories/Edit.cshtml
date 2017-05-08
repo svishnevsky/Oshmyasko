@@ -1,0 +1,53 @@
+﻿@model CategoryViewModel
+@{
+    ViewData["Title"] = Model == null ? "Добавление категории" : Model.Name;
+}
+
+<div class="text-center">
+    <h2>@(Model == null ? "Добавление категории" : $"Редактирование категории: {Model.Name}")</h2>
+</div>
+
+<div class="container col-lg-8 col-lg-offset-2">
+    <form method="post" asp-controller="Categories" asp-action="Edit" class="form-horizontal" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id"/>
+        <input type="hidden" asp-for="Image" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label col-xs-3">Название</label>
+            <div class="col-xs-9">
+                <input asp-for="Name" type="text" class="form-control" placeholder="Введите название" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image" class="control-label col-xs-3">Изображение</label>
+            <div class="col-xs-9">
+                <input name="ImageUpload" id="ImageUpload" type="file" class="form-control" data-val-required="Значение обязательно." accept="image/*" />
+            </div>
+            <span data-valmsg-for="ImageUpload" class="text-danger" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default col-xs-offset-5">Сохранить</button>
+            <a asp-controller="Categories" asp-action="List" class="btn btn-default">Отмена</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+$(document).on('ready', function() {
+    $("#ImageUpload").fileinput({
+        browseClass: "btn btn-primary btn-block",
+        showCaption: false,
+        showRemove: false,
+        showUpload: false,
+        language: 'ru',
+        @if (!string.IsNullOrEmpty(Model?.Image))
+            {
+                @Html.Raw($"initialPreview: ['{Url.Content(Model.Image)}'], initialPreviewAsData: true")
+        }
+        });
+});
+    </script>
+}

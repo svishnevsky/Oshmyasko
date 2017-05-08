@@ -7,18 +7,34 @@ header {
 }
 
     header h1 {
-        font-size: 24px;
-        margin-top: 5px;
+        font-size: 26px;
+        margin-top: 10px;
         margin-bottom: 5px;
     }
 
     header h2 {
-        font-size: 18px;
+        font-size: 20px;
         margin-top: 0;
+        margin-bottom: 5px;
     }
 
-.inline-block {
-    display: inline-block;
+    header nav.navbar {
+        margin-bottom: 0;
+        min-height: 0;
+    }
+
+        header nav.navbar a {
+            font-size: 16px;
+            padding: 5px;
+        }
+
+    header .logo {
+        width: 153px;
+        margin-right: 10px;
+    }
+
+.inline {
+    display: inline;
 }
 
 .input-validation-error {

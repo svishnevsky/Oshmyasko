@@ -1,1 +1,30 @@
-﻿
+﻿@model IEnumerable<CategoryViewModel>
+@{
+    ViewData["Title"] = "Каталог";
+}
+
+<div class="text-center">
+    <h2>Каталог</h2>
+</div>
+
+<div class="container">
+    @if (User.IsInRole("Сотрудник"))
+    {
+        <div class="col-lg-3 text-center">
+            <a asp-controller="Categories" asp-action="Edit">
+                <img src="~/images/plus.svg" alt="Добавить категорию" class="col-xs-12" />
+                <p>Добавить</p>
+            </a>
+        </div>
+
+        @foreach (var category in Model)
+        {
+            <div class="col-lg-3 text-center">
+                <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id">
+                    <img src="@Url.Content(category.Image)" alt="@category.Name" class="col-xs-12" />
+                    <p>@category.Name</p>
+                </a>
+            </div>
+        }
+    }
+</div>

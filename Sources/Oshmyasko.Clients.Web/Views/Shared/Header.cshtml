@@ -3,10 +3,8 @@
 }
 <header class="navbar-fixed-top">
     <div class="container">
-        <img src="~/images/logo.png" alt="ОАО Ошмянский мясокомбинат" />
-        <div class="inline-block">
-            <h1>ОАО "Ошмянский мясокомбинат"</h1>
-            <h2>Система учета продукции</h2>
+        <div class="pull-left logo">
+            <img src="~/images/logo.png" alt="ОАО Ошмянский мясокомбинат" />
         </div>
         @if (ApplicationUser != null)
         {
@@ -18,5 +16,19 @@
                 </form>
             </div>
         }
+        <div class="inline">
+            <h1>ОАО "Ошмянский мясокомбинат"</h1>
+            <h2>Система учета продукции</h2>
+            @if (ApplicationUser != null)
+            {
+                <nav class="navbar">
+                    <div class="container">
+                        <ul class="nav navbar-nav">
+                            <li><a asp-controller="Categories" asp-action="List">Продукция</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            }
+        </div>
     </div>
 </header>
