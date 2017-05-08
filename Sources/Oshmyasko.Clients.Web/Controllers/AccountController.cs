@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Oshmyasko.Clients.Web.Models;
 using Oshmyasko.Clients.Web.Models.Account;
@@ -12,10 +13,16 @@ namespace Oshmyasko.Clients.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            RoleManager<IdentityRole> roleManager)
         {
-
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         [HttpGet]
@@ -60,6 +67,11 @@ namespace Oshmyasko.Clients.Web.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                if (!(await roleManager.RoleExistsAsync(model.Role)))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(model.Role));
+                }
+
                 await userManager.AddToRoleAsync(user, model.Role);
                 await signInManager.SignInAsync(user, isPersistent: true);
                 return RedirectToLocal(returnUrl);
