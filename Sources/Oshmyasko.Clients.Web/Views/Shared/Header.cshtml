@@ -1,9 +1,22 @@
-﻿<header class="navbar-fixed-top">
+﻿@{
+    var ApplicationUser = this.Context.GetUser();
+}
+<header class="navbar-fixed-top">
     <div class="container">
-        <img src="~/images/logo.png" alt="ОАО Ошмянский мясокомбинат"/>
+        <img src="~/images/logo.png" alt="ОАО Ошмянский мясокомбинат" />
         <div class="inline-block">
             <h1>ОАО "Ошмянский мясокомбинат"</h1>
             <h2>Система учета продукции</h2>
         </div>
+        @if (ApplicationUser != null)
+        {
+            <div class="pull-right">
+                <p>@($"{ApplicationUser.FirstName} {ApplicationUser.LastName}".Trim())</p>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="center-text">
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-default" type="submit">Выйти</button>
+                </form>
+            </div>
+        }
     </div>
 </header>

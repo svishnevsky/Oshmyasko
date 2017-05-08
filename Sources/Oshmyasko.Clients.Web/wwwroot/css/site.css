@@ -17,16 +17,16 @@ header {
         margin-top: 0;
     }
 
-footer {
-    text-align: center;
-}
-
 .inline-block {
     display: inline-block;
 }
 
 .input-validation-error {
     border: 1px solid #a94442;
+}
+
+.center-text {
+    text-align: center;
 }
 
 div.register {
