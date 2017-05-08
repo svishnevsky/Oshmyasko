@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Авторизация";
+}
+
+<div class="container col-lg-6">
+    <h4>Вход в систему учета продукции</h4>
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Login" class="control-label col-xs-2">Логин</label>
+            <div class="col-xs-9">
+                <input asp-for="Login" type="text" class="form-control" placeholder="Введите логин" />
+            </div>
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label col-xs-2">Пароль</label>
+            <div class="col-xs-9">
+                <input asp-for="Password" type="text" class="form-control" placeholder="Введите пароль" />
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default col-xs-offset-5">Войти</button>
+        </div>
+    </form>
+</div>
+<div class="container col-lg-6">
+    <h4>Регистрация в системе учета продукции</h4>
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Login" class="control-label col-xs-3">Логин</label>
+            <div class="col-xs-9">
+                <input asp-for="Login" type="text" class="form-control" placeholder="Введите логин" />
+            </div>
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Surname" class="control-label col-xs-3">Имя</label>
+            <div class="col-xs-9">
+                <input asp-for="FirstName" type="text" class="form-control" placeholder="Введите ваше имя" />
+            </div>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Surname" class="control-label col-xs-3">Отчество</label>
+            <div class="col-xs-9">
+                <input asp-for="Surname" type="text" class="form-control" placeholder="Введите ваше отчество" />
+            </div>
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label col-xs-3">Фамилия</label>
+            <div class="col-xs-9">
+                <input asp-for="LastName" type="text" class="form-control" placeholder="Введите вашу фамилию" />
+            </div>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Role" class="control-label col-xs-3">Роль</label>
+            <div class="col-xs-9">
+                <select asp-for="Role" class="form-control" placeholder="Выберите вашу роль в системе">
+                    <option value="Employee">Сотрудник</option>
+                    <option value="Customer">Клиент</option>
+                </select>
+            </div>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label col-xs-3">Пароль</label>
+            <div class="col-xs-9">
+                <input asp-for="Password" type="text" class="form-control" placeholder="Введите пароль" />
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label col-xs-3">Подтверждение пароля</label>
+            <div class="col-xs-9">
+                <input asp-for="ConfirmPassword" type="text" class="form-control" placeholder="Введите пароль еще раз" />
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default col-xs-offset-5">Зарегистрироваться</button>
+        </div>
+    </form>
+</div>

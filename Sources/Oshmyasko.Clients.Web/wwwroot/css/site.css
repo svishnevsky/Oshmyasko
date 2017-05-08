@@ -1,0 +1,26 @@
+﻿body {
+    padding-top: 115px;
+}
+
+header {
+    background: #eeeeee;
+}
+
+header h1 {
+    font-size: 24px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+header h2 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+footer {
+    text-align: center;
+}
+
+.inline-block {
+    display: inline-block;
+}
