@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ProductViewModel>
+@{
+    ViewData["Title"] = "Каталог";
+}
+
+<div class="text-center">
+    <h2>Каталог</h2>
+</div>
+
+<div class="container categories">
+    @if (User.IsInRole("Сотрудник"))
+    {
+        <div class="col-lg-3 text-center">
+            <a asp-controller="Products" asp-action="Edit" asp-route-categoryId="@ViewContext.RouteData.Values["categoryId"]">
+                <img src="~/images/plus.svg" alt="Добавить продукт" class="col-xs-12" />
+                <p>Добавить</p>
+            </a>
+        </div>
+    }
+
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 text-center">
+            @if (User.IsInRole("Сотрудник"))
+            {
+                <div class='icon-group'>
+                    <a asp-controller="Products" asp-action="Edit" asp-route-categoryId="@product.CategoryId" asp-route-id="@product.Id" class='icon edit'></a>
+                    <a asp-controller="Products" asp-action="Delete" asp-route-categoryId="@product.CategoryId" asp-route-id="@product.Id" class='icon delete'></a>
+                </div>
+            }
+
+            <a asp-controller="Products" asp-action="Get" asp-route-categoryId="@product.CategoryId" asp-route-id="@product.Id">
+                <img src="@Url.Content(product.Image)" alt="@product.Name" />
+                <p>@product.Name</p>
+            </a>
+        </div>
+    }
+</div>

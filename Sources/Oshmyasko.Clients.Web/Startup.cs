@@ -58,6 +58,10 @@ namespace Oshmyasko.Clients.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Products",
+                    template: "categories/{categoryId}/products/{action=List}/{id?}",
+                    defaults: new { controller = "Products" });
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Categories}/{action=List}/{id?}");
             });

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oshmyasko.Clients.Web.Data;
-using Oshmyasko.Clients.Web.Models.Category;
+using Oshmyasko.Clients.Web.Models.Product;
 using System;
 using System.IO;
 using System.Linq;
@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 namespace Oshmyasko.Clients.Web.Controllers
 {
     [Authorize]
-    public class CategoriesController : Controller
+    public class ProductsController : Controller
     {
         private IHostingEnvironment environment;
         private ApplicationDbContext context;
 
-        public CategoriesController(IHostingEnvironment environment, ApplicationDbContext context)
+        public ProductsController(IHostingEnvironment environment, ApplicationDbContext context)
         {
             this.environment = environment;
             this.context = context;
@@ -26,9 +26,23 @@ namespace Oshmyasko.Clients.Web.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            var model = this.context.Set<Category>()
-                .Select(x => new CategoryViewModel { Id = x.Id, Image = x.Image, Name = x.Name })
+            var model = this.context.Set<Product>()
+                .Select(x => new ProductViewModel { Id = x.Id, Image = x.Image, Name = x.Name, CategoryId = x.CategoryId, Composition = x.Composition })
                 .ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(int id)
+        {
+            ProductViewModel model = null;
+            var product = await this.context.Set<Product>().FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition };
             return View(model);
         }
 
@@ -36,16 +50,16 @@ namespace Oshmyasko.Clients.Web.Controllers
         [Authorize(Roles = "Сотрудник")]
         public async Task<IActionResult> Edit(int? id = null)
         {
-            CategoryViewModel model = null;
+            ProductViewModel model = null;
             if (id.HasValue)
             {
-                var category = await this.context.Set<Category>().FirstOrDefaultAsync(x => x.Id == id.Value);
-                if (category == null)
+                var product = await this.context.Set<Product>().FirstOrDefaultAsync(x => x.Id == id.Value);
+                if (product == null)
                 {
                     return NotFound();
                 }
 
-                model = new CategoryViewModel { Id = category.Id, Image = category.Image, Name = category.Name };
+                model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition };
             }
 
             return View(model);
@@ -53,7 +67,7 @@ namespace Oshmyasko.Clients.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Сотрудник")]
-        public async Task<IActionResult> Edit(CategoryViewModel model)
+        public async Task<IActionResult> Edit(ProductViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -87,11 +101,13 @@ namespace Oshmyasko.Clients.Web.Controllers
                 }
             }
 
-            var entity = new Category
+            var entity = new Product
             {
                 Id = model.Id,
                 Image = model.Image,
-                Name = model.Name
+                Name = model.Name,
+                Composition = model.Composition,
+                CategoryId = model.CategoryId
             };
 
             if (model.Id.HasValue)
@@ -112,13 +128,13 @@ namespace Oshmyasko.Clients.Web.Controllers
         [Authorize(Roles = "Сотрудник")]
         public async Task<IActionResult> Delete(int id)
         {
-            var entity = await this.context.Set<Category>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await this.context.Set<Product>().FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            this.context.Set<Category>().Remove(entity);
+            this.context.Remove(entity);
             await this.context.SaveChangesAsync();
             return RedirectToAction("List");
         }

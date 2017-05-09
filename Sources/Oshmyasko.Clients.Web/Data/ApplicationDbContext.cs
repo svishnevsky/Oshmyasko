@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Oshmyasko.Clients.Web.Models;
 using Oshmyasko.Clients.Web.Models.Category;
+using Oshmyasko.Clients.Web.Models.Product;
 using System.Linq;
 
 namespace Oshmyasko.Clients.Web.Data
@@ -40,6 +41,36 @@ namespace Oshmyasko.Clients.Web.Data
                 .IsRequired()
                 .HasMaxLength(1000)
                 .IsUnicode();
+            
+            builder.Entity<Product>()
+                .ToTable("Products")
+                .Property(x => x.Id)
+                .IsRequired()
+                .UseSqlServerIdentityColumn();
+            builder.Entity<Product>()
+                .HasKey(x => x.Id)
+                .ForSqlServerHasName("ProductId");
+            builder.Entity<Product>()
+                .Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode();
+            builder.Entity<Product>()
+                .Property(x => x.Image)
+                .IsRequired()
+                .HasMaxLength(1000)
+                .IsUnicode();
+            builder.Entity<Product>()
+                .Property(x => x.Composition)
+                .IsRequired()
+                .HasMaxLength(2000)
+                .IsUnicode();
+            builder.Entity<Product>()
+                .HasOne<Category>()
+                .WithMany()
+                .HasForeignKey("CategoryId")
+                .IsRequired()
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
         }
     }
 }
