@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ClientViewModel>
+@{
+    ViewData["Title"] = "Клиенты";
+}
+
+<div class="text-center">
+    <h2>Клиенты</h2>
+</div>
+
+<div class="container clients">
+    <table id="clients" class="col-lg-12 table table-striped table-bordered" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Контактная информация</th>
+                <th>Количество заказов</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Контактная информация</th>
+                <th>Количество заказов</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@client.Name</td>
+                    <td>@client.Address</td>
+                    <td>@client.Contact</td>
+                    <td><a asp-controller="Orders" asp-action="List" asp-route-client="@client.UserName">@client.Orders</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#clients').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "Нет данных для отображения",
+                    "info": "Показано с _START_ по _END_ из _TOTAL_ записей",
+                    "infoEmpty": "Нет записей для отображения",
+                    "infoFiltered": "(отфильтровано из _MAX_ записей)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Показаны _MENU_ записи",
+                    "loadingRecords": "Загрузка...",
+                    "processing": "Обработка...",
+                    "search": "Поиск:",
+                    "zeroRecords": "Не найдено подходящих записей",
+                    "paginate": {
+                        "first": "Первая",
+                        "last": "Последняя",
+                        "next": "Следующая",
+                        "previous": "Предыдущая"
+                    },
+                    "aria": {
+                        "sortAscending": ": сортировка по возврастанию",
+                        "sortDescending": ": сортировка по убыванию"
+                    }
+                }
+            });
+        });
+    </script>
+}
