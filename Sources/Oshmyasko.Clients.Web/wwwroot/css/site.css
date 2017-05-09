@@ -72,6 +72,10 @@ div.register {
     border-left: 1px solid #eeeeee;
 }
 
+div.register .client {
+    display: none;
+}
+
 .categories > div {
     height: 225px;
 }

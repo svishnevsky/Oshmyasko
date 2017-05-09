@@ -65,12 +65,51 @@ namespace Oshmyasko.Clients.Web.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            if (model.Role == "Сотрудник")
+            {
+                if (string.IsNullOrEmpty(model.FirstName))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.FirstName), "Поле обязательно.");
+                }
+                if (string.IsNullOrEmpty(model.LastName))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.LastName), "Поле обязательно.");
+                }
+                if (string.IsNullOrEmpty(model.Surname))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.Surname), "Поле обязательно.");
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(model.Name))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.Name), "Поле обязательно.");
+                }
+                if (string.IsNullOrEmpty(model.Address))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.Address), "Поле обязательно.");
+                }
+                if (string.IsNullOrEmpty(model.Contact))
+                {
+                    ModelState.AddModelError(nameof(RegisterViewModel.Contact), "Поле обязательно.");
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("Login", model);
             }
 
-            var user = new ApplicationUser { UserName = model.Login, FirstName = model.FirstName, LastName = model.LastName, Surname = model.Surname };
+            var user = new ApplicationUser {
+                UserName = model.Login,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Surname = model.Surname,
+                Name = model.Name,
+                Address = model.Address,
+                Contact = model.Contact
+            };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {

@@ -9,7 +9,7 @@
         @if (ApplicationUser != null)
         {
             <div class="pull-right">
-                <p>@($"{ApplicationUser.FirstName} {ApplicationUser.LastName}".Trim())</p>
+                <p>@(string.IsNullOrEmpty(ApplicationUser.Name) ? $"{ApplicationUser.FirstName} {ApplicationUser.LastName}".Trim() : ApplicationUser.Name)</p>
                 <form asp-controller="Account" asp-action="Logout" method="post" class="center-text">
                     @Html.AntiForgeryToken()
                     <button class="btn btn-default" type="submit">Выйти</button>

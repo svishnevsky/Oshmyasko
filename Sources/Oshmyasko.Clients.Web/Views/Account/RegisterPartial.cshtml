@@ -12,33 +12,53 @@
             <span asp-validation-for="Login" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="Role" class="control-label col-xs-3">Роль</label>
+            <div class="col-xs-9">
+                <select asp-for="Role" class="form-control" asp-items="@(new[] {new SelectListItem{ Text = "Сотрудник", Value = "Сотрудник"}, new SelectListItem{ Text = "Клиент", Value = "Клиент" }})"></select>
+            </div>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+        <div class="form-group employee">
             <label asp-for="Surname" class="control-label col-xs-3">Имя</label>
             <div class="col-xs-9">
                 <input asp-for="FirstName" type="text" class="form-control" placeholder="Введите ваше имя" />
             </div>
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group client">
+            <label asp-for="Name" class="control-label col-xs-3">Название</label>
+            <div class="col-xs-9">
+                <input asp-for="Name" type="text" class="form-control" placeholder="Введите название" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group client">
+            <label asp-for="Address" class="control-label col-xs-3">Адрес</label>
+            <div class="col-xs-9">
+                <textarea asp-for="Address" class="form-control" placeholder="Введите адрес"></textarea>
+            </div>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group client">
+            <label asp-for="Contact" class="control-label col-xs-3">Контакты</label>
+            <div class="col-xs-9">
+                <textarea asp-for="Contact" type="text" class="form-control" placeholder="Введите контактную информацию"></textarea>
+            </div>
+            <span asp-validation-for="Contact" class="text-danger"></span>
+        </div>
+        <div class="form-group employee">
             <label asp-for="Surname" class="control-label col-xs-3">Отчество</label>
             <div class="col-xs-9">
                 <input asp-for="Surname" type="text" class="form-control" placeholder="Введите ваше отчество" />
             </div>
             <span asp-validation-for="Surname" class="text-danger"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group employee">
             <label asp-for="LastName" class="control-label col-xs-3">Фамилия</label>
             <div class="col-xs-9">
                 <input asp-for="LastName" type="text" class="form-control" placeholder="Введите вашу фамилию" />
             </div>
             <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Role" class="control-label col-xs-3">Роль</label>
-            <div class="col-xs-9">
-                <select asp-for="Role" class="form-control" asp-items="@(new[] {new SelectListItem{ Text = "Сотрудник", Value = "Сотрудник"}, new SelectListItem{ Text = "Клиент", Value = "Клиент" }})">
-                </select>
-            </div>
-            <span asp-validation-for="Role" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password" class="control-label col-xs-3">Пароль</label>

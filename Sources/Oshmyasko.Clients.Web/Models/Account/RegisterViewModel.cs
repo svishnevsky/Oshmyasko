@@ -8,21 +8,30 @@ namespace Oshmyasko.Clients.Web.Models.Account
         [StringLength(30, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 5)]
         [Display(Name = "Логин")]
         public string Login { get; set; }
-
-        [Required(ErrorMessage = "Поле обязательно.")]
+        
         [StringLength(30, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
-
-        [Required(ErrorMessage = "Поле обязательно.")]
+        
         [StringLength(30, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
-
-        [Required(ErrorMessage = "Поле обязательно.")]
+        
         [StringLength(30, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
         [Display(Name = "Отчество")]
         public string Surname { get; set; }
+        
+        [StringLength(50, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
+        [Display(Name = "Название")]
+        public string Name { get; set; }
+        
+        [StringLength(200, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
+        [Display(Name = "Адрес")]
+        public string Address { get; set; }
+        
+        [StringLength(200, ErrorMessage = "Поле должно быть не менее {2} и не более {1} символов.", MinimumLength = 2)]
+        [Display(Name = "Контакты")]
+        public string Contact { get; set; }
 
         [Required(ErrorMessage = "Поле обязательно.")]
         [Display(Name = "Роль")]

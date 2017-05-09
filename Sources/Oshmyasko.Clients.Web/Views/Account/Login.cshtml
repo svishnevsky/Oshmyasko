@@ -4,3 +4,23 @@
 
 @Html.Partial("LoginPartial", Model as LoginViewModel)
 @Html.Partial("RegisterPartial", Model as RegisterViewModel)
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Role").change(function () {
+                var role = $(this).find(":selected").val();
+                if (role == 'Клиент') {
+                    $('.register .employee').hide();
+                    $('.register .client').show();
+                } else {
+                    $('.register .employee').show();
+                    $('.register .client').hide();
+                }
+            });
+
+            $("#Role").change();
+        })
+    </script>
+}
