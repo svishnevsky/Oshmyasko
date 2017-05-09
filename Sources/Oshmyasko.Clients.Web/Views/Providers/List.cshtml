@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ProviderViewModel>
+@{
+    ViewData["Title"] = "Поставщики";
+}
+
+<div class="text-center">
+    <h2>Поставщики <a asp-controller="Providers" asp-action="Edit" class="pull-right small btn btn-default">Добавить</a></h2>
+</div>
+
+<div class="container providers">
+    <table id="providers" class="col-lg-12 table table-striped table-bordered" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Контактная информация</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Контактная информация</th>
+                <th></th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var provider in Model)
+            {
+                <tr>
+                    <td>@provider.Name</td>
+                    <td>@provider.Address</td>
+                    <td>@provider.Contact</td>
+                    <td>
+                        <a asp-controller="Providers" asp-action="Edit" asp-route-id="@provider.Id" class='icon edit'></a>
+                        <a asp-controller="Providers" asp-action="Delete" asp-route-id="@provider.Id" class='icon delete'></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#providers').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "Нет данных для отображения",
+                    "info": "Показано с _START_ по _END_ из _TOTAL_ записей",
+                    "infoEmpty": "Нет записей для отображения",
+                    "infoFiltered": "(отфильтровано из _MAX_ записей)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Показаны _MENU_ записи",
+                    "loadingRecords": "Загрузка...",
+                    "processing": "Обработка...",
+                    "search": "Поиск:",
+                    "zeroRecords": "Не найдено подходящих записей",
+                    "paginate": {
+                        "first": "Первая",
+                        "last": "Последняя",
+                        "next": "Следующая",
+                        "previous": "Предыдущая"
+                    },
+                    "aria": {
+                        "sortAscending": ": сортировка по возврастанию",
+                        "sortDescending": ": сортировка по убыванию"
+                    }
+                },
+                "columnDefs": [
+                    { "orderable": true, "targets": 0 },
+                    { "orderable": true, "targets": 1 },
+                    { "orderable": true, "targets": 2 },
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+        });
+    </script>
+}

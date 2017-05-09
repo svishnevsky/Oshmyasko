@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Oshmyasko.Clients.Web.Models;
 using Oshmyasko.Clients.Web.Models.Category;
 using Oshmyasko.Clients.Web.Models.Product;
+using Oshmyasko.Clients.Web.Models.Provider;
 using System.Linq;
 
 namespace Oshmyasko.Clients.Web.Data
@@ -71,6 +72,30 @@ namespace Oshmyasko.Clients.Web.Data
                 .HasForeignKey("CategoryId")
                 .IsRequired()
                 .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
+
+            builder.Entity<Provider>()
+                .ToTable("Providers")
+                .Property(x => x.Id)
+                .IsRequired()
+                .UseSqlServerIdentityColumn();
+            builder.Entity<Provider>()
+                .HasKey(x => x.Id)
+                .ForSqlServerHasName("ProviderId");
+            builder.Entity<Provider>()
+                .Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode();
+            builder.Entity<Provider>()
+                .Property(x => x.Address)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode();
+            builder.Entity<Provider>()
+                .Property(x => x.Contact)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode();
         }
     }
 }

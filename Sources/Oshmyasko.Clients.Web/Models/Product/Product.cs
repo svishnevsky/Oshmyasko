@@ -1,9 +1,7 @@
 ﻿namespace Oshmyasko.Clients.Web.Models.Product
 {
-    public class Product
+    public class Product : Entity
     {
-        public int? Id { get; set; }
-
         public int CategoryId { get; set; }
 
         public string Name { get; set; }
