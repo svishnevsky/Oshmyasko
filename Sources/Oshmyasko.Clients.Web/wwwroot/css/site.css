@@ -41,6 +41,29 @@ header {
     border: 1px solid #a94442;
 }
 
+.icon {
+    background: url(../images/img-sprite.png);
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all .2s ease-in-out;
+    transform: scale(0.6);
+    cursor: pointer;
+}
+
+    .icon:hover {
+        transform: scale(0.9);
+    }
+
+    .icon.delete {
+        background-position: 0 0;
+    }
+
+    .icon.edit {
+        background-position: -25px 0;
+    }
+
 .center-text {
     text-align: center;
 }
@@ -48,3 +71,25 @@ header {
 div.register {
     border-left: 1px solid #eeeeee;
 }
+
+.categories > div {
+    height: 225px;
+}
+
+    .categories > div > a {
+        height: 100%;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    .categories > div > a > img {
+        height: 80%;
+        margin: 0 auto;
+    }
+
+    .categories > div .icon-group {
+        float: left;
+        position: absolute;
+        z-index: 2;
+        background: rgba(200, 200, 200, 0.7);
+    }

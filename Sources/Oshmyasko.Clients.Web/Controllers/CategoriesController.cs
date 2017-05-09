@@ -104,5 +104,20 @@ namespace Oshmyasko.Clients.Web.Controllers
             await this.context.SaveChangesAsync();
             return RedirectToAction("List");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Сотрудник")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var entity = await this.context.Set<Category>().FirstOrDefaultAsync(x => x.Id == id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            this.context.Set<Category>().Remove(entity);
+            await this.context.SaveChangesAsync();
+            return RedirectToAction("List");
+        }
     }
 }

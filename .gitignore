@@ -252,3 +252,4 @@ paket-files/
 *.sln.iml
 Sources/Oshmyasko.Clients.Web/wwwroot/lib/*
 Sources/Oshmyasko.Clients.Web/wwwroot/Uploads/*
+Sources/Oshmyasko.Clients.Web/wwwroot/css/site.min.css
