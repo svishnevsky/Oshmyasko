@@ -62,6 +62,10 @@ namespace Oshmyasko.Clients.Web
                     template: "categories/{categoryId}/products/{action=List}/{id?}",
                     defaults: new { controller = "Products" });
                 routes.MapRoute(
+                    name: "Orders",
+                    template: "orders/{client?}/{action=List}/{id?}",
+                    defaults: new { controller = "Orders" });
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Categories}/{action=List}/{id?}");
             });

@@ -29,6 +29,10 @@
                             {
                                 <li><a asp-controller="Providers" asp-action="List">Поставщики</a></li>
                             }
+                            @if (User.IsInRole("Клиент"))
+                            {
+                                <li><a asp-controller="Orders" asp-action="List" asp-route-client="@User.Identity.Name">История заказов</a></li>
+                            }
                         </ul>
                     </div>
                 </nav>

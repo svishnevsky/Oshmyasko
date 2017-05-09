@@ -1,0 +1,15 @@
+﻿@model OrderViewModel
+
+<form method="post" asp-controller="Orders" asp-action="Post" asp-route-client="@User.Identity.Name" class="form-horizontal">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="ProductId" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">        
+        <div class="col-xs-6">
+            <input asp-for="Count" type="number" class="form-control" placeholder="Укажите количество" />
+        </div>
+        <label asp-for="Count" class="control-label">кг</label>
+        <button type="submit" class="btn btn-default">Заказать</button>
+        <span asp-validation-for="Count" class="text-danger"></span>
+    </div>
+</form>

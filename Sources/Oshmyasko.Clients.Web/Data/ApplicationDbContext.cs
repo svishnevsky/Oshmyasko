@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Oshmyasko.Clients.Web.Models;
 using Oshmyasko.Clients.Web.Models.Category;
+using Oshmyasko.Clients.Web.Models.Order;
 using Oshmyasko.Clients.Web.Models.Product;
 using Oshmyasko.Clients.Web.Models.Provider;
+using System;
 using System.Linq;
 
 namespace Oshmyasko.Clients.Web.Data
@@ -96,6 +98,41 @@ namespace Oshmyasko.Clients.Web.Data
                 .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode();
+
+            builder.Entity<Order>()
+                .ToTable("Orders")
+                .Property(x => x.Id)
+                .IsRequired()
+                .UseSqlServerIdentityColumn();
+            builder.Entity<Order>()
+                .HasKey(x => x.Id)
+                .ForSqlServerHasName("OrderId");
+            builder.Entity<Order>()
+                .Property(x => x.Count)
+                .IsRequired();
+            builder.Entity<Order>()
+                .Property(x => x.Confirmed)
+                .IsRequired(false);
+            builder.Entity<Order>()
+                .Property(x => x.Client)
+                .IsRequired();
+            builder.Entity<Order>()
+                .Property(x => x.Created)
+                .ForSqlServerHasDefaultValueSql("GETDATE()")
+                .IsRequired();
+            builder.Entity<Order>()
+                .HasOne(x => x.Product)
+                .WithMany()
+                .HasForeignKey(x => x.ProductId)
+                .IsRequired()
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
+            builder.Entity<Order>()
+                .HasOne(x => x.ClientInfo)
+                .WithMany()
+                .HasForeignKey(x => x.Client)
+                .HasPrincipalKey("UserName")
+                .IsRequired()
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
         }
     }
 }
