@@ -28,6 +28,7 @@
                             @if (User.IsInRole("Сотрудник"))
                             {
                                 <li><a asp-controller="Providers" asp-action="List">Поставщики</a></li>
+                                <li><a asp-controller="Orders" asp-action="List" asp-route-client="">Активные заказы (@(((ApplicationDbContext)Context.RequestServices.GetService(typeof(ApplicationDbContext))).Set<Order>().Count(x => !x.Confirmed.HasValue)))</a></li>
                             }
                             @if (User.IsInRole("Клиент"))
                             {

@@ -19,7 +19,7 @@ namespace Oshmyasko.Clients.Web.Models.Order
         
         public DateTime Created { get; set; }
 
-        public ApplicationUser ClientInfo { get; set; }
+        public UserViewModel Client { get; set; }
 
         public ProductViewModel Product { get; set; }
     }

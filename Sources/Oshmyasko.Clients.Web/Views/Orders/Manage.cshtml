@@ -1,0 +1,7 @@
+﻿@model OrderViewModel
+
+<form asp-controller="Orders" asp-action="Put" asp-route-client="@Model.Client.UserName" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" name="Confirmed" id="Confirmed" />
+    <button type="submit" class="btn btn-default confirm">Подтвердить</button>
+    <button type="submit" class="btn btn-default decline">Отклонить</button>
+</form>

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Oshmyasko.Clients.Web.Controllers
 {
-    [Authorize(Roles = "Клиент")]
     public class OrdersController : Controller
     {
         private ApplicationDbContext context;
@@ -21,6 +20,7 @@ namespace Oshmyasko.Clients.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Клиент,Сотрудник")]
         public IActionResult List(string client = null)
         {
             var model = this.context.Set<Order>()
@@ -33,7 +33,7 @@ namespace Oshmyasko.Clients.Web.Controllers
                     Confirmed = x.Confirmed,
                     Created = x.Created,
                     Product = new ProductViewModel { Id = x.Product.Id, CategoryId = x.Product.CategoryId, Name = x.Product.Name },
-                    ClientInfo = new ApplicationUser { Name = x.ClientInfo.Name }
+                    Client = new UserViewModel { Name = x.ClientInfo.Name, UserName = x.ClientInfo.UserName }
                 })
                 .OrderByDescending(x => x.Created)
                 .ToList();
@@ -41,6 +41,7 @@ namespace Oshmyasko.Clients.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Клиент")]
         public async Task<IActionResult> Post(OrderViewModel model, string client)
         {
             if (!ModelState.IsValid)
@@ -55,17 +56,24 @@ namespace Oshmyasko.Clients.Web.Controllers
                 Client = client
             };
 
-            //if (model.Id.HasValue)
-            //{
-            //    var entry = this.context.Attach(entity);
-            //TODO: Created
-            //    entry.State = EntityState.Modified;
-            //}
-            //else
-            //{
-                this.context.Add(entity);
-            //}
+            this.context.Add(entity);
+            await this.context.SaveChangesAsync();
+            return RedirectToAction("List");
+        }
 
+        [HttpPost]
+        [Authorize(Roles = "Сотрудник")]
+        public async Task<IActionResult> Put(string client, int id, bool confirmed)
+        {
+            var entity = await this.context.Set<Order>().FirstOrDefaultAsync(x => x.Id == id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            entity.Confirmed = confirmed;
+            var entry = this.context.Attach(entity);
+            entry.State = EntityState.Modified;
             await this.context.SaveChangesAsync();
             return RedirectToAction("List");
         }

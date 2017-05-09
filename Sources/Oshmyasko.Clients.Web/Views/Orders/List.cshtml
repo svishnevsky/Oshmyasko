@@ -11,6 +11,10 @@
     <table id="orders" class="col-lg-12 table table-striped table-bordered" cellspacing="0">
         <thead>
             <tr>
+                @if (User.IsInRole("Сотрудник") && !ViewContext.RouteData.Values.ContainsKey("client"))
+                {
+                    <th>Клиент</th>
+                }
                 <th>Продукт</th>
                 <th>Количество</th>
                 <th>Дата</th>
@@ -19,6 +23,10 @@
         </thead>
         <tfoot>
             <tr>
+                @if (User.IsInRole("Сотрудник") && !ViewContext.RouteData.Values.ContainsKey("client"))
+                {
+                    <th>Клиент</th>
+                }
                 <th>Продукт</th>
                 <th>Количество</th>
                 <th>Дата</th>
@@ -29,10 +37,30 @@
             @foreach (var order in Model)
             {
                 <tr>
+                    @if (User.IsInRole("Сотрудник") && !ViewContext.RouteData.Values.ContainsKey("client"))
+                {
+                        <td><a asp-controller="Orders" asp-action="List" asp-route-client="@order.Client.UserName">@order.Client.Name</a></td>
+                    }
                     <td><a asp-controller="Products" asp-action="Get" asp-route-categoryId="@order.Product.CategoryId" asp-route-id="@order.ProductId">@order.Product.Name</a></td>
                     <td>@order.Count</td>
                     <td>@order.Created</td>
-                    <td>@(order.Confirmed.HasValue ? order.Confirmed.Value ? "Подтвержден" : "Отклонен" : "В обработке")</td>
+                    @if (User.IsInRole("Клиент"))
+                    {
+                        <td>@(order.Confirmed.HasValue ? order.Confirmed.Value ? "Подтвержден" : "Отклонен" : "В обработке")</td>
+                    }
+                    else if (User.IsInRole("Сотрудник"))
+                    {
+                        <td>
+                            @if (order.Confirmed.HasValue)
+                    {
+                                @(order.Confirmed.Value ? "Подтвержден" : "Отклонен");
+                            }
+                            else
+                            {
+                                @Html.Partial("Manage", order)
+                            }
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -69,6 +97,14 @@
                     }
                 }
             });
+
+            $("#orders button.confirm").click(function () {
+                $(this).parents("form").children("input[name=Confirmed]").val(true);
+            });
+
+            $("#orders button.decline").click(function () {
+                $(this).parents("form").children("input[name=Confirmed]").val(false);
+            })
         });
     </script>
 }
