@@ -76,6 +76,14 @@ div.register .client {
     display: none;
 }
 
+.reports {
+    padding-top: 10px;
+}
+
+.reports .data {
+    margin-top: 15px;
+}
+
 .categories > div {
     height: 225px;
 }
@@ -97,3 +105,9 @@ div.register .client {
         z-index: 2;
         background: rgba(200, 200, 200, 0.7);
     }
+
+@media print {
+    header nav.navbar, header form button {
+        display: none;
+    }
+}
