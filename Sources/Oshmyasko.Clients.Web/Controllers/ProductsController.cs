@@ -24,9 +24,10 @@ namespace Oshmyasko.Clients.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult List()
+        public IActionResult List(int? categoryId)
         {
             var model = this.context.Set<Product>()
+                .Where(x => !categoryId.HasValue || x.CategoryId == categoryId.Value)
                 .Select(x => new ProductViewModel { Id = x.Id, Image = x.Image, Name = x.Name, CategoryId = x.CategoryId, Composition = x.Composition })
                 .ToList();
             return View(model);
