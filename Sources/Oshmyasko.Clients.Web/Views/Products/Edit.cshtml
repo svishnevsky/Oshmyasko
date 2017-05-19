@@ -22,6 +22,13 @@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="Quantity" class="control-label col-xs-3">Количество</label>
+            <div class="col-xs-9">
+                <input asp-for="Quantity" type="number" class="form-control" placeholder="Укажите количество" />
+            </div>
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="Image" class="control-label col-xs-3">Изображение</label>
             <div class="col-xs-9">
                 <input name="ImageUpload" id="ImageUpload" type="file" class="form-control" data-val-required="Значение обязательно." accept="image/*" />

@@ -11,6 +11,11 @@ namespace Oshmyasko.Clients.Web.Models.Product
         [Display(Name = "Название")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Значение обязательно.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Значение должно быть не меньше ноля.")]
+        [Display(Name = "Количество на складе")]
+        public double Quantity { get; set; }
+
         [Display(Name = "Изображение")]
         public string Image { get; set; }
 

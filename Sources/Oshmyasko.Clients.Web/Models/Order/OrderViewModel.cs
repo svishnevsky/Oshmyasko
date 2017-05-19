@@ -12,7 +12,7 @@ namespace Oshmyasko.Clients.Web.Models.Order
         public int ProductId { get; set; }
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Значение должно быть больше ноля.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Недопустимое количество.")]
         public double Count { get; set; }
 
         public bool? Confirmed { get; set; }

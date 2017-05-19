@@ -28,7 +28,7 @@ namespace Oshmyasko.Clients.Web.Controllers
         {
             var model = this.context.Set<Product>()
                 .Where(x => !categoryId.HasValue || x.CategoryId == categoryId.Value)
-                .Select(x => new ProductViewModel { Id = x.Id, Image = x.Image, Name = x.Name, CategoryId = x.CategoryId, Composition = x.Composition })
+                .Select(x => new ProductViewModel { Id = x.Id, Image = x.Image, Name = x.Name, CategoryId = x.CategoryId, Composition = x.Composition, Quantity = x.Quantity ?? 0 })
                 .ToList();
             return View(model);
         }
@@ -43,7 +43,7 @@ namespace Oshmyasko.Clients.Web.Controllers
                 return NotFound();
             }
 
-            model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition };
+            model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition, Quantity = product.Quantity ?? 0 };
             return View(model);
         }
 
@@ -60,7 +60,7 @@ namespace Oshmyasko.Clients.Web.Controllers
                     return NotFound();
                 }
 
-                model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition };
+                model = new ProductViewModel { Id = product.Id, Image = product.Image, Name = product.Name, CategoryId = product.CategoryId, Composition = product.Composition, Quantity = product.Quantity ?? 0 };
             }
 
             return View(model);
@@ -108,7 +108,8 @@ namespace Oshmyasko.Clients.Web.Controllers
                 Image = model.Image,
                 Name = model.Name,
                 Composition = model.Composition,
-                CategoryId = model.CategoryId
+                CategoryId = model.CategoryId,
+                Quantity = model.Quantity
             };
 
             if (model.Id.HasValue)

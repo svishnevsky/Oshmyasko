@@ -12,14 +12,18 @@ namespace Oshmyasko.Clients.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        private readonly static object lockObj = new object();
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
             base.ChangeTracker.AutoDetectChangesEnabled = false;
-            //base.Database.EnsureCreated();
-            if (base.Database.GetPendingMigrations().Any())
+            lock (lockObj)
             {
-                base.Database.Migrate();
+                if (base.Database.GetPendingMigrations().Any())
+                {
+                    base.Database.Migrate();
+                }
             }
         }
 

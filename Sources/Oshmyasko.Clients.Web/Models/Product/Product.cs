@@ -9,5 +9,7 @@
         public string Image { get; set; }
 
         public string Composition { get; set; }
+
+        public double? Quantity { get; set; }
     }
 }

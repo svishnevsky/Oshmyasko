@@ -46,9 +46,24 @@ namespace Oshmyasko.Clients.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("Get", "Products", new { id = model.ProductId });
             }
 
+            var product = await this.context.Set<Product>().FirstOrDefaultAsync(x => x.Id == model.ProductId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (model.Count > product.Quantity)
+            {
+                ModelState.AddModelError(nameof(OrderViewModel.Count), "На складе недостаточно продукции.");
+                return RedirectToAction("Get", "Products", new { id = model.ProductId });
+            }
+
+            product.Quantity -= model.Count;
+            var productEntry = this.context.Attach(product);
+            productEntry.State = EntityState.Modified;
             var entity = new Order
             {
                 Count = model.Count,

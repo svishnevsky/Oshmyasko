@@ -8,6 +8,12 @@
 </div>
 
 <div class="container col-lg-10 col-lg-offset-1">
+    <div class="form-group">
+        <label class="control-label col-xs-3">Доступно на складе</label>
+        <div class="col-xs-9">
+            <p>@Model.Quantity кг</p>
+        </div>
+    </div>
     @if (User.IsInRole("Клиент"))
     {
         @Html.Partial("Order", new OrderViewModel { ProductId = Model.Id.Value });
@@ -25,3 +31,12 @@
         <a asp-controller="Products" asp-action="List" asp-route-categoryId="@ViewContext.RouteData.Values["categoryId"]" class="btn btn-default col-xs-offset-5">Назад</a>
     </div>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#formOrder").validate().settings.rules.Count.range = [1, @Model.Quantity];
+        });
+    </script>
+}
