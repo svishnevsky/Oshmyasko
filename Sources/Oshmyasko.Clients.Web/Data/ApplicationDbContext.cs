@@ -73,7 +73,7 @@ namespace Oshmyasko.Clients.Web.Data
                 .HasMaxLength(2000)
                 .IsUnicode();
             builder.Entity<Product>()
-                .HasOne<Category>()
+                .HasOne(x => x.Category)
                 .WithMany()
                 .HasForeignKey("CategoryId")
                 .IsRequired()

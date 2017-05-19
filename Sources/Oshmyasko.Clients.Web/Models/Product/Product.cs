@@ -11,5 +11,7 @@
         public string Composition { get; set; }
 
         public double? Quantity { get; set; }
+
+        public virtual Category.Category Category { get; set; }
     }
 }

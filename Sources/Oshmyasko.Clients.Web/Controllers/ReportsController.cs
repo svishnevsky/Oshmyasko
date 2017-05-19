@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Oshmyasko.Clients.Web.Data;
 using Oshmyasko.Clients.Web.Models;
+using Oshmyasko.Clients.Web.Models.Category;
 using Oshmyasko.Clients.Web.Models.Order;
+using Oshmyasko.Clients.Web.Models.Product;
 using Oshmyasko.Clients.Web.Models.Report;
 using System;
 using System.Linq;
@@ -47,6 +49,21 @@ namespace Oshmyasko.Clients.Web.Controllers
                     Count = x.Count,
                     Date = x.Created,
                     Name = x.ClientInfo.Name
+                })
+                .ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Warehouse(int? categoryId)
+        {
+            var model = this.context.Set<Product>()
+                .Where(x => !categoryId.HasValue || x.CategoryId == categoryId.Value)
+                .Select(x => new ReportViewModel
+                {
+                    Name = x.Name,
+                    Count = x.Quantity ?? 0,
+                    Category = new CategoryViewModel { Id = x.CategoryId, Name = x.Category.Name }
                 })
                 .ToList();
             return View(model);

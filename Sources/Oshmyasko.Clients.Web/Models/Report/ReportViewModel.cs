@@ -1,4 +1,5 @@
 ﻿using System;
+using Oshmyasko.Clients.Web.Models.Category;
 
 namespace Oshmyasko.Clients.Web.Models.Report
 {
@@ -9,5 +10,7 @@ namespace Oshmyasko.Clients.Web.Models.Report
         public double Count { get; set; }
 
         public DateTime Date { get; set; }
+
+        public CategoryViewModel Category { get; internal set; }
     }
 }
