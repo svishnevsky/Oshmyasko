@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Oshmyasko.Clients.Web.Data;
 using Oshmyasko.Clients.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Oshmyasko.Clients.Web.Formatters;
 
 namespace Oshmyasko.Clients.Web
 {
@@ -39,7 +40,10 @@ namespace Oshmyasko.Clients.Web
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.OutputFormatters.Add(new CsvOutputFormatter());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

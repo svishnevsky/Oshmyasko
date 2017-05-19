@@ -1,6 +1,6 @@
-﻿@model IEnumerable<ReportViewModel>
+﻿@model IEnumerable<WarehouseReportViewModel>
 @{
-    ViewData["Title"] = "Отчет по продукту";
+    ViewData["Title"] = "Отчет по складу";
 }
 
 <div class="text-center">
@@ -25,6 +25,7 @@
                 </select>
             </div>
 
+            <a class="pull-right" href="@($"{Context.Request.Path.Value.Replace("/Warehouse", "/WarehouseDownload")}{Context.Request.QueryString.Value}")" target="_blank"><img src="~/images/save.png" alt="Сохранить" /></a>
             <a class="pull-right" href="#" onclick="javascript:window.print()"><img src="~/images/print.png" alt="Печать" /></a>
             <button type="submit" class="btn btn-default">Сформировать</button>
         </form>
@@ -35,14 +36,14 @@
         <table id="warehouse" class="col-lg-12 table table-striped table-bordered" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Название</th>
+                    <th>Продукт</th>
                     <th>Категория</th>
                     <th>Количество</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Название</th>
+                    <th>Продукт</th>
                     <th>Категория</th>
                     <th>Количество</th>
                 </tr>
@@ -52,7 +53,7 @@
                     {
                         <tr>
                             <td>@item.Name</td>
-                            <td>@item.Category.Name</td>
+                            <td>@item.Category</td>
                             <td>@item.Count</td>
                         </tr>
                     }
