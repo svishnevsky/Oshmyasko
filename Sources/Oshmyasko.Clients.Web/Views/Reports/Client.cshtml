@@ -15,7 +15,8 @@
     <div>
         <form asp-controller="Reports" asp-action="Client" method="get" class="form-horizontal filter">
             <div class="form-goup col-md-3">
-                <select class="form-control" name="UserName">
+                <select class="form-control" name="Client">
+                    <option value="">Все</option>
                     @foreach (var product in ((UserManager<ApplicationUser>)Context.RequestServices.GetService(typeof(UserManager<ApplicationUser>))).GetUsersInRoleAsync("Клиент").Result.OrderBy(x => x.Name))
                     {
                         <option value="@product.UserName">@product.Name</option>
@@ -109,17 +110,17 @@
             });
 
             var query = getUrlParams();
-            $("form.filter select").val(query["UserName"] || $("form.filter select option:first").val());
+            $("form.filter select").val(query["Client"] || $("form.filter select option:first").val());
 
             $('input[type=datetime]#From').datetimepicker({
                 locale: 'ru',
-                defaultDate: query["From"] || new Date(),
+                defaultDate: query["From"],
                 format: "YYYY-MM-DD"
             });
 
             $('input[type=datetime]#To').datetimepicker({
                 locale: 'ru',
-                defaultDate: query["To"] || new Date(),
+                defaultDate: query["To"],
                 format: "YYYY-MM-DD"
             });
         });
