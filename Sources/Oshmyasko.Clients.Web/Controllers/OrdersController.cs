@@ -89,6 +89,14 @@ namespace Oshmyasko.Clients.Web.Controllers
             entity.Confirmed = confirmed;
             var entry = this.context.Attach(entity);
             entry.State = EntityState.Modified;
+            if(!confirmed)
+            {
+                var product = await this.context.Set<Product>().FirstOrDefaultAsync(x => x.Id == entity.ProductId);
+                product.Quantity += entity.Count;
+                var productEntry = this.context.Attach(product);
+                productEntry.State = EntityState.Modified;
+            }
+
             await this.context.SaveChangesAsync();
             return RedirectToAction("List");
         }
